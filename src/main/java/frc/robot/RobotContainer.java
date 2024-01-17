@@ -1,2 +1,7 @@
+package frc.robot;
+
 public class RobotContainer {
-    //Test
+  public RobotContainer() {
+
+  }
+}
