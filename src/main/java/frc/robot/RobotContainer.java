@@ -1,7 +1,11 @@
 package frc.robot;
 
-public class RobotContainer {
-  public RobotContainer() {
+import frc.robot.subsystems.DriveTrain;
 
-  }
+public class RobotContainer {
+   private DriveTrain driveTrain;
+
+   public RobotContainer() {
+      driveTrain = new DriveTrain();
+   }
 }
