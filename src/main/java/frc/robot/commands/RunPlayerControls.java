@@ -5,19 +5,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Outtake;
+import frc.robot.subsystems.Cannon;
 
 public class RunPlayerControls extends Command {
    private XboxController xbox;
    private DriveTrain drive;
-   private Outtake outtake;
+   private Cannon cannon;
 
-   public RunPlayerControls(DriveTrain p_drive, Outtake p_outtake){
+   public RunPlayerControls(DriveTrain p_drive, Cannon p_cannon){
       //Object definitions for the controllers and the required subsystems
       xbox = new XboxController(Constants.xboxPort);
       drive = p_drive;
-      outtake = p_outtake;
-      addRequirements(p_drive, p_outtake);
+      cannon = p_cannon;
+      addRequirements(p_drive, p_cannon);
    }
 
    @Override
@@ -33,7 +33,7 @@ public class RunPlayerControls extends Command {
             break;
          //If drive train mode is set to trigger hybrid drive; operate trigger hybrid drive
          case "TriggerHybrid":
-            drive.arcadeDrive(xbox.getRightTriggerAxis() * Constants.SystemSpeeds.driveTrain - (xbox.getLeftTriggerAxis() * Constants.SystemSpeeds.driveTrain), xbox.getLeftX() * Constants.SystemSpeeds.driveTrain);
+            drive.arcadeDrive(xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis(), xbox.getLeftX());
             break;
       }
       otherControls();
@@ -42,7 +42,9 @@ public class RunPlayerControls extends Command {
    //Handles the controls that are outside of the drive train
    private void otherControls(){
       if (xbox.getAButton()){
-         outtake.on();
-      } else outtake.off();
+         cannon.on(false);
+      } else cannon.off();
+
+      //todo - Add joystick to outtake aimer
    }
 }
