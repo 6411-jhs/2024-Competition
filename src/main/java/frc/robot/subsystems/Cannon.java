@@ -9,13 +9,14 @@ import frc.robot.Constants;
 
 public class Cannon extends SubsystemBase {
    //Motor controller definitions
-   private CANSparkMax leftNeo; 
+   private CANSparkMax leftNeo;
    private CANSparkMax rightNeo; 
    private TalonFX falcon;
    public Cannon(){
       //Motor controller initializations
       leftNeo = new CANSparkMax(Constants.CANAssignments.leftOTF, CANSparkLowLevel.MotorType.kBrushless);
       rightNeo = new CANSparkMax(Constants.CANAssignments.rightOTF, CANSparkLowLevel.MotorType.kBrushless);
+      leftNeo.setInverted(true);
       falcon = new TalonFX(Constants.CANAssignments.mainOTA);
    }
 
