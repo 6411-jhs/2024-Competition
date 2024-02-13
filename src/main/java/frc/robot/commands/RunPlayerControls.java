@@ -28,6 +28,7 @@ public class RunPlayerControls extends Command {
       tankdriveControls();
       cannonControls();
       otherControls();
+      cannon.getEncoder();
    }
 
    private void tankdriveControls(){

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
 
@@ -18,6 +19,8 @@ public class Cannon extends SubsystemBase {
       rightNeo = new CANSparkMax(Constants.CANAssignments.rightCNeo, CANSparkLowLevel.MotorType.kBrushless);
       leftNeo.setInverted(true);
       falcon = new TalonFX(Constants.CANAssignments.mainCFalcon);
+      
+      falcon.setNeutralMode(NeutralModeValue.Coast);
    }
 
    /**
@@ -33,6 +36,12 @@ public class Cannon extends SubsystemBase {
    public void off(){
       leftNeo.set(0);
       rightNeo.set(0);
+   }
+
+   public double getEncoder(){
+      System.out.println("Default Pos:    " + falcon.getPosition());
+      System.out.println("Rotor Pos:      " + falcon.getRotorPosition());
+      return 0;
    }
 
    /**
