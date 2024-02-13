@@ -7,10 +7,10 @@ public final class Constants {
       public final static int frontRightDT = 2;
       public final static int backRightDT = 3;
 
-      public final static int leftOTF = 4;
-      public final static int rightOTF = 5;
+      public final static int leftCNeo = 4;
+      public final static int rightCNeo = 5;
 
-      public final static int mainOTA = 6;
+      public final static int mainCFalcon = 6;
    }
 
    public final class SystemSpeeds {

@@ -24,6 +24,7 @@ public class DriveTrain extends SubsystemBase {
       //Makes it easier because there's no need to control one motor individually on the drive train; only one side
       backLeft.follow(frontLeft);
       backRight.follow(frontRight);
+      frontRight.setInverted(true);
 
       //Initializes the drive train object
       drive = new DifferentialDrive(frontLeft, frontRight);

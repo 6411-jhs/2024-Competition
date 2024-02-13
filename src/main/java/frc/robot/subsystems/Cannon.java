@@ -14,10 +14,10 @@ public class Cannon extends SubsystemBase {
    private TalonFX falcon;
    public Cannon(){
       //Motor controller initializations
-      leftNeo = new CANSparkMax(Constants.CANAssignments.leftOTF, CANSparkLowLevel.MotorType.kBrushless);
-      rightNeo = new CANSparkMax(Constants.CANAssignments.rightOTF, CANSparkLowLevel.MotorType.kBrushless);
+      leftNeo = new CANSparkMax(Constants.CANAssignments.leftCNeo, CANSparkLowLevel.MotorType.kBrushless);
+      rightNeo = new CANSparkMax(Constants.CANAssignments.rightCNeo, CANSparkLowLevel.MotorType.kBrushless);
       leftNeo.setInverted(true);
-      falcon = new TalonFX(Constants.CANAssignments.mainOTA);
+      falcon = new TalonFX(Constants.CANAssignments.mainCFalcon);
    }
 
    /**
