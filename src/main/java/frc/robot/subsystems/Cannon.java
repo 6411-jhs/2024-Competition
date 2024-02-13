@@ -35,6 +35,12 @@ public class Cannon extends SubsystemBase {
       rightNeo.set(0);
    }
 
+   public double getEncoder(){
+      System.out.println("Default Pos:    " + falcon.getPosition());
+      System.out.println("Rotor Pos:      " + falcon.getRotorPosition());
+      return 0;
+   }
+
    /**
     * Sets the raw speed value of the neos
     * @param speed Speed to set. 1 for full forward and -1 for full reverse
