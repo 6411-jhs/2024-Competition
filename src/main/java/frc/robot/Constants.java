@@ -19,7 +19,9 @@ public final class Constants {
       public final static double falcon = 0.5;
    }
    
-   public final static int xboxPort = 0;
-   public final static int joystickPort = 1;
-   public final static String drivingStyle = "TriggerHybrid"; //Don't change (outtake testing)
+   public final class UserControls {
+      public final static int xboxPort = 0;
+      public final static int joystickPort = 1;
+      public final static String drivingStyle = "TriggerHybrid";
+   }
 }

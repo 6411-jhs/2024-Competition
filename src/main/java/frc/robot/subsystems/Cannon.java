@@ -19,8 +19,8 @@ public class Cannon extends SubsystemBase {
       rightNeo = new CANSparkMax(Constants.CANAssignments.rightCNeo, CANSparkLowLevel.MotorType.kBrushless);
       leftNeo.setInverted(true);
       falcon = new TalonFX(Constants.CANAssignments.mainCFalcon);
-      
-      falcon.setNeutralMode(NeutralModeValue.Coast);
+      falcon.setPosition(0);
+      falcon.setNeutralMode(NeutralModeValue.Brake);
    }
 
    /**
@@ -38,10 +38,12 @@ public class Cannon extends SubsystemBase {
       rightNeo.set(0);
    }
 
+   /**
+    * Gets the raw encoder value of the falcon motor. Rotations are counted
+    * @return The raw position of the motor.
+    */
    public double getEncoder(){
-      System.out.println("Default Pos:    " + falcon.getPosition());
-      System.out.println("Rotor Pos:      " + falcon.getRotorPosition());
-      return 0;
+      return falcon.getPosition().getValue();
    }
 
    /**
