@@ -28,7 +28,7 @@ public class Cannon extends SubsystemBase {
     * @param reverse Whether or not to run the neos in referse; this swaps the sign of the constant
     */
    public void on(boolean reverse){
-      double speed = (reverse) ? (-Constants.SystemSpeeds.neos) : (Constants.SystemSpeeds.neos);
+      double speed = (reverse) ? (-Constants.MAXSystemSpeeds.neos) : (Constants.MAXSystemSpeeds.neos);
       leftNeo.set(speed);
       rightNeo.set(speed);
    }
@@ -51,15 +51,18 @@ public class Cannon extends SubsystemBase {
     * @param speed Speed to set. 1 for full forward and -1 for full reverse
     */
    public void setNeos(double speed){
-      leftNeo.set(speed * Constants.SystemSpeeds.neos);
-      rightNeo.set(speed * Constants.SystemSpeeds.neos);
+      leftNeo.set(speed * Constants.MAXSystemSpeeds.neos);
+      rightNeo.set(speed * Constants.MAXSystemSpeeds.neos);
    }
 
    /**
     * Sets the raw speed value of the falcon
     * @param speed Speed to set. 1 for full forward and -1 for full reverse
+    * @param ignoreMaxSpeed Whether or not to ignore the max speed of the falcon set my the constants (Constants.MAXSystemSpeeds.falcon)
     */
-   public void setFalcon(double speed){
-      falcon.set(speed * Constants.SystemSpeeds.falcon);
+   public void setFalcon(double speed, boolean ignoreMaxSpeed){
+      if (ignoreMaxSpeed){
+         falcon.set(speed);
+      } else falcon.set(speed * Constants.MAXSystemSpeeds.falcon);
    }
 }

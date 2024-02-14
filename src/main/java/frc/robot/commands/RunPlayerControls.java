@@ -20,6 +20,9 @@ public class RunPlayerControls extends Command {
 
    private SetCannonAngle setCannonAngle90;
 
+   private boolean reverseCannon = false;
+   private double drivetrainSpeedSet = 1;
+
    public RunPlayerControls(DriveTrain p_drive, Cannon p_cannon){
       //Object definitions for the controllers and the required subsystems
       xbox = new XboxController(Constants.UserControls.xboxPort);
@@ -33,38 +36,48 @@ public class RunPlayerControls extends Command {
 
    @Override
    public void execute() {
-      tankdriveControls();
+      driveTrainControls();
       cannonControls();
       otherControls();
    }
 
-   private void tankdriveControls(){
+   private void driveTrainControls(){
       switch(Constants.UserControls.drivingStyle){
          //If drive train mode is set to tank drive; operate tank drive
          case "Tank":
-            drive.tankDrive(xbox.getLeftY(), xbox.getRightY());
+            drive.tankDrive(xbox.getLeftY() * drivetrainSpeedSet, xbox.getRightY() * drivetrainSpeedSet);
             break;
          //If drive train mode is set to arcade drive; operate arcade drive
          case "Arcade":
-            drive.arcadeDrive(xbox.getLeftY(), xbox.getRightX());
+            drive.arcadeDrive(xbox.getLeftY() * drivetrainSpeedSet, xbox.getRightX() * drivetrainSpeedSet);
             break;
          //If drive train mode is set to trigger hybrid drive; operate trigger hybrid drive
          case "TriggerHybrid":
-            drive.arcadeDrive(xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis(), xbox.getLeftX());
+            drive.arcadeDrive((xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis()) * drivetrainSpeedSet, xbox.getLeftX() * drivetrainSpeedSet);
             break;
       }
    }
 
    private void cannonControls(){
-      cannon.setFalcon(joystick.getY());
+      cannon.setFalcon(joystick.getY(), false);
    }
 
    //Handles the controls that are outside of the drive train
    private void otherControls(){
-      if (xbox.getAButton()){
-         cannon.on(false);
-      } else cannon.off();
+      //Xbox Controls
+      if (xbox.getAButtonPressed()){
+         drivetrainSpeedSet = 0.5;
+      } else if (xbox.getBButtonPressed()){
+         drivetrainSpeedSet = 0.75;
+      } else if (xbox.getYButtonPressed()){
+         drivetrainSpeedSet = 1;
+      }
 
+      //Joystick Controls
+      if (joystick.getRawButtonPressed(2)) reverseCannon = !reverseCannon;
+      if (joystick.getRawButton(1)){
+         cannon.on(reverseCannon);
+      }
       if (joystick.getRawButtonPressed(11)){
          CommandScheduler.getInstance().schedule(setCannonAngle90);
       }

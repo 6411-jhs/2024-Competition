@@ -13,7 +13,7 @@ public final class Constants {
       public final static int mainCFalcon = 6;
    }
 
-   public final class SystemSpeeds {
+   public final class MAXSystemSpeeds {
       public final static double driveTrain = 0.5;
       public final static double neos = 0.5;
       public final static double falcon = 0.5;
