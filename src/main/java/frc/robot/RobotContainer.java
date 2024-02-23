@@ -1,20 +1,28 @@
 package frc.robot;
 
-import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.RunPlayerControls;
+import edu.wpi.first.wpilibj2.command.Commands;
+
+import frc.robot.util.PlayerControls;
+
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Cannon;
 
 public class RobotContainer {
    //Subsystem definitions
    private DriveTrain driveTrain;
-   //Command definitions
-   private RunPlayerControls runPlayerControls;
+   private Cannon cannon;
+   //Other definitions
+   private PlayerControls playerControls;
 
    public RobotContainer() {
       //Class initializations
       driveTrain = new DriveTrain();
-      runPlayerControls = new RunPlayerControls(driveTrain);
+      cannon = new Cannon();
+      playerControls = new PlayerControls(driveTrain, cannon);
       //Default command routing
-      CommandScheduler.getInstance().setDefaultCommand(driveTrain, runPlayerControls);
+      CommandScheduler.getInstance().setDefaultCommand(driveTrain, Commands.run(() -> {
+         playerControls.run();
+      }));
    }
 }
