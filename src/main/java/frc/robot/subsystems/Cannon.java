@@ -65,4 +65,8 @@ public class Cannon extends SubsystemBase {
          falcon.set(speed);
       } else falcon.set(speed * Constants.MAXSystemSpeeds.falcon);
    }
+
+   public void resetFalconEncoder(){
+      falcon.setPosition(0);
+   }
 }

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.util.PlayerControls;
 
@@ -21,8 +22,13 @@ public class RobotContainer {
       cannon = new Cannon();
       playerControls = new PlayerControls(driveTrain, cannon);
       //Default command routing
-      CommandScheduler.getInstance().setDefaultCommand(driveTrain, Commands.run(() -> {
-         playerControls.run();
-      }));
+   }
+
+   public void periodic(){
+      playerControls.run();
+   }
+
+   public void onTeleopStart(){
+      cannon.resetFalconEncoder();
    }
 }

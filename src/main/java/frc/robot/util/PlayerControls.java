@@ -75,6 +75,7 @@ public class PlayerControls {
    }
 
    private void cannonControls(){
-      cannon.setFalcon(joystick.getY(), false);
+      // System.out.println(joystick.getY());
+      // cannon.setFalcon(joystick.getY(), false);
    }
 }

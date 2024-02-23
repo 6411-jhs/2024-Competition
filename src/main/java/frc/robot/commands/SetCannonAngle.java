@@ -15,7 +15,7 @@ public class SetCannonAngle extends Command {
    public TargetParams target;
    
    private double minimumSpeed = 0.1;
-   private double fullPowerThreshold = 2 / 3; //Should be a fraction of the target angle
+   private double fullPowerThreshold = 0.33; //Should be a decimal percentage of the target angle
    private boolean powerIsNegative = false;
    private double powerStepdown = 0;
    private double[] fullPowerEncoderThreshold = {0,0};
@@ -28,8 +28,9 @@ public class SetCannonAngle extends Command {
       target.encoderValue = target.gearedEncoderValue * 100;
 
       double thresholdDeviation = target.gearedEncoderValue * fullPowerThreshold;
-      fullPowerEncoderThreshold[0] = target.gearedEncoderValue - thresholdDeviation;
-      fullPowerEncoderThreshold[1] = target.gearedEncoderValue + thresholdDeviation;
+      System.out.println("Threshold: " + thresholdDeviation);
+      fullPowerEncoderThreshold[0] = (target.gearedEncoderValue - thresholdDeviation) * 100;
+      fullPowerEncoderThreshold[1] = (target.gearedEncoderValue + thresholdDeviation) * 100;
       
       powerStepdown = 0.9 / thresholdDeviation;
       addRequirements(p_cannon);
@@ -45,8 +46,6 @@ public class SetCannonAngle extends Command {
       } else {
          calcSpeed = powerStepdown * Math.abs((cannon.getEncoder() / 100) - target.gearedEncoderValue) + minimumSpeed;
       }
-
-      System.out.println("Speed:  " + calcSpeed + ",  Neg:  " + powerIsNegative);
       setFalconExtended(calcSpeed);
    }
 
@@ -61,13 +60,24 @@ public class SetCannonAngle extends Command {
       else return false;
    }
 
+   @Override
+   public void end(boolean interrupted) {
+       cannon.setFalcon(0, true);
+   }
+
    private void setFalconExtended(double speed){
       if (speed > MAXSystemSpeeds.falcon){
+         System.out.println("fullPowerEncoderThreshold:  " + fullPowerEncoderThreshold[0] + " " + fullPowerEncoderThreshold[1] + ", Encoder:  " + cannon.getEncoder() + " Speed:  " + ((powerIsNegative)
+            ? -MAXSystemSpeeds.falcon
+            : MAXSystemSpeeds.falcon));
          cannon.setFalcon((powerIsNegative)
             ? -MAXSystemSpeeds.falcon
             : MAXSystemSpeeds.falcon
          , true);
       } else {
+         System.out.println("fullPowerEncoderThreshold:  " + fullPowerEncoderThreshold[0] + " " + fullPowerEncoderThreshold[1] + ", Encoder:  " + cannon.getEncoder() + " Speed:  " + ((powerIsNegative)
+            ? -speed
+            : speed));
          cannon.setFalcon((powerIsNegative)
             ? -speed
             : speed
