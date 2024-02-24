@@ -29,24 +29,24 @@ public class PlayerControls {
       joystick = new CommandJoystick(Constants.UserControls.joystickPort);
       setAngle90 = new SetCannonAngle(cannon, 90);
 
-      xbox.a().onTrue(Commands.run(() -> {
+      xbox.a().onTrue(Commands.runOnce(() -> {
          drivetrainSpeedSet = 0.5;
       }));
-      xbox.b().onTrue(Commands.run(() -> {
+      xbox.b().onTrue(Commands.runOnce(() -> {
          drivetrainSpeedSet = 0.75;
       }));
-      xbox.y().onTrue(Commands.run(() -> {
+      xbox.y().onTrue(Commands.runOnce(() -> {
          drivetrainSpeedSet = 1;
       }));
 
       joystick.trigger()
-         .whileTrue(Commands.run(() -> {
+         .onTrue(Commands.runOnce(() -> {
             cannon.on(reverseCannon);
          }))
-         .onFalse(Commands.run(() -> {
+         .onFalse(Commands.runOnce(() -> {
             cannon.off();
          }));
-      joystick.button(2).onTrue(Commands.run(() -> {
+      joystick.button(2).onTrue(Commands.runOnce(() -> {
          reverseCannon = !reverseCannon;
       }));
       joystick.button(11).onTrue(setAngle90);
@@ -75,7 +75,6 @@ public class PlayerControls {
    }
 
    private void cannonControls(){
-      // System.out.println(joystick.getY());
-      // cannon.setFalcon(joystick.getY(), false);
+      cannon.setFalcon(joystick.getY(), false);
    }
 }
