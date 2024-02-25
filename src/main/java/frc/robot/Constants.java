@@ -14,8 +14,8 @@ public final class Constants {
    }
 
    public final class MAXSystemSpeeds {
-      public final static double driveTrain = 0.5;
-      public final static double neos = 0.5;
+      public final static double driveTrain = 1;
+      public final static double neos = 1;
       public final static double falcon = 0.5;
    }
    

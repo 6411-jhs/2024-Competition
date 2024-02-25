@@ -1,12 +1,8 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-
-import frc.robot.util.PlayerControls;
-
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Cannon;
+import frc.robot.util.PlayerControls;
 
 public class RobotContainer {
    //Subsystem definitions
@@ -20,9 +16,15 @@ public class RobotContainer {
       driveTrain = new DriveTrain();
       cannon = new Cannon();
       playerControls = new PlayerControls(driveTrain, cannon);
-      //Default command routing
-      CommandScheduler.getInstance().setDefaultCommand(driveTrain, Commands.run(() -> {
-         playerControls.run();
-      }));
+   }
+
+   //Runs every 20ms, is tied to normal robot periodic
+   public void periodic(){
+      playerControls.run();
+   }
+
+   //When teleop starts...
+   public void onTeleopStart(){
+      cannon.resetFalconEncoder();
    }
 }
