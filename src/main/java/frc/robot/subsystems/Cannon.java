@@ -13,6 +13,9 @@ public class Cannon extends SubsystemBase {
    private CANSparkMax leftNeo;
    private CANSparkMax rightNeo; 
    private TalonFX falcon;
+
+   public double maxFalconSpeed = Constants.DefaultSystemSpeeds.neos;
+   public double maxNeoSpeed = Constants.DefaultSystemSpeeds.neos;
    public Cannon(){
       //Motor controller initializations
       leftNeo = new CANSparkMax(Constants.CANAssignments.leftCNeo, CANSparkLowLevel.MotorType.kBrushless);
@@ -28,7 +31,7 @@ public class Cannon extends SubsystemBase {
     * @param reverse Whether or not to run the neos in referse; this swaps the sign of the constant
     */
    public void on(boolean reverse){
-      double speed = (reverse) ? (-Constants.MAXSystemSpeeds.neos) : (Constants.MAXSystemSpeeds.neos);
+      double speed = (reverse) ? (-maxNeoSpeed) : (maxNeoSpeed);
       leftNeo.set(speed);
       rightNeo.set(speed);
    }
@@ -51,8 +54,8 @@ public class Cannon extends SubsystemBase {
     * @param speed Speed to set. 1 for full forward and -1 for full reverse
     */
    public void setNeos(double speed){
-      leftNeo.set(speed * Constants.MAXSystemSpeeds.neos);
-      rightNeo.set(speed * Constants.MAXSystemSpeeds.neos);
+      leftNeo.set(speed * maxNeoSpeed);
+      rightNeo.set(speed * maxNeoSpeed);
    }
 
    /**
@@ -63,11 +66,19 @@ public class Cannon extends SubsystemBase {
    public void setFalcon(double speed, boolean ignoreMaxSpeed){
       if (ignoreMaxSpeed){
          falcon.set(speed);
-      } else falcon.set(speed * Constants.MAXSystemSpeeds.falcon);
+      } else falcon.set(speed * maxFalconSpeed);
    }
 
    /**Resets the falcon encoder value to 0 */
    public void resetFalconEncoder(){
       falcon.setPosition(0);
+   }
+
+   public void setMaxNeoSpeed(double speed){
+      maxNeoSpeed = speed;
+   }
+
+   public void setMaxFalconSpeed(double speed){
+      maxFalconSpeed = speed;
    }
 }

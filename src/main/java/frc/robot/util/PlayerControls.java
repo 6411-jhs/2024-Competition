@@ -67,7 +67,7 @@ public class PlayerControls {
 
    /**Takes the xbox controller joystick axis values and operates the drive train based on chosen mode */
    private void driveTrainControls(){
-      switch(Constants.UserControls.drivingStyle){
+      switch(Constants.UserControls.defaultDrivingStyle){
          //If drive train mode is set to tank drive; operate tank drive
          case "Tank":
             drive.tankDrive(xbox.getLeftY() * drivetrainSpeedSet, xbox.getRightY() * drivetrainSpeedSet);

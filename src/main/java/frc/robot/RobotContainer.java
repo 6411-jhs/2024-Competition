@@ -1,4 +1,5 @@
 package frc.robot;
+import java.util.HashMap;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Cannon;
@@ -28,6 +29,20 @@ public class RobotContainer {
 
    //When teleop starts...
    public void onTeleopStart(){
+      HashMap<String, Double> configData = dashboard.getWrittenData();
+      driveTrain.setMaxSpeed(configData.get("driveTrainMax"));
+      cannon.setMaxFalconSpeed(configData.get("falconMax"));
+      cannon.setMaxNeoSpeed(configData.get("neosMax"));
+
+      double driveMode = configData.get("driveMode");
+      if (driveMode == 1){
+         driveTrain.setDriveMode("Tank");
+      } else if (driveMode == 2){
+         driveTrain.setDriveMode("Arcade");
+      } else if (driveMode == 3){
+         driveTrain.setDriveMode("TriggerHybrid");
+      }
+
       cannon.resetFalconEncoder();
    }
 }

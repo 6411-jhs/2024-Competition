@@ -12,6 +12,8 @@ public class DriveTrain extends SubsystemBase {
    //FRC's drivetrain class for the tank drive provided in the kit of parts (operates the motor controllers in all together)
    private DifferentialDrive drive;
 
+   public double maxSpeed = Constants.DefaultSystemSpeeds.driveTrain;
+   public String driveMode = Constants.UserControls.defaultDrivingStyle;
    public DriveTrain() {
       //Initializes motor controllers
       frontLeft = new WPI_VictorSPX(Constants.CANAssignments.frontLeftDT);
@@ -37,7 +39,7 @@ public class DriveTrain extends SubsystemBase {
     * @param rightSpeed The speed ranging from full power in reverse (-1) to full power forward (1). This controls the right motors on the DT.
     */
    public void tankDrive(double leftSpeed, double rightSpeed) {
-      drive.tankDrive(leftSpeed * Constants.MAXSystemSpeeds.driveTrain, rightSpeed * Constants.MAXSystemSpeeds.driveTrain);
+      drive.tankDrive(leftSpeed * maxSpeed, rightSpeed * maxSpeed);
    }
    /**
     * Operates the robot in arcade drive (wheel speed is under one value instead of two. Turning value varies the speed on the correlated side to turn)
@@ -45,20 +47,28 @@ public class DriveTrain extends SubsystemBase {
     * @param direction The turning direction ranging from full left (-1) to full right (1). This varries the speed of one side of the DT to turn.
     */
    public void arcadeDrive(double speed, double direction){
-      drive.arcadeDrive(speed * Constants.MAXSystemSpeeds.driveTrain, direction * Constants.MAXSystemSpeeds.driveTrain);
+      drive.arcadeDrive(speed * maxSpeed, direction * maxSpeed);
    }
    /**
     * Sets the speed of the left wheels (motors) of the DT
     * @param speed Speed of the motors ranging from full power in reverse (-1) to full power forward (1).
     */
    public void driveLeftMotors(double speed){
-      frontLeft.set(speed * Constants.MAXSystemSpeeds.driveTrain);
+      frontLeft.set(speed * maxSpeed);
    }
    /**
     * Sets the speed of the right wheels (motors) of the DT
     * @param speed Speed of the motors ranging from full power in reverse (-1) to full power forward (1).
     */
    public void driveRightMotors(double speed){
-      frontRight.set(speed * Constants.MAXSystemSpeeds.driveTrain);
+      frontRight.set(speed * maxSpeed);
+   }
+
+   public void setMaxSpeed(double speed){
+      maxSpeed = speed;
+   }
+
+   public void setDriveMode(String p_driveMode){
+      driveMode = p_driveMode;
    }
 }

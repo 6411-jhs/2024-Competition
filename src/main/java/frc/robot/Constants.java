@@ -13,7 +13,7 @@ public final class Constants {
       public final static int mainCFalcon = 6;
    }
 
-   public final class MAXSystemSpeeds {
+   public final class DefaultSystemSpeeds {
       public final static double driveTrain = 1;
       public final static double neos = 1;
       public final static double falcon = 0.5;
@@ -22,6 +22,6 @@ public final class Constants {
    public final class UserControls {
       public final static int xboxPort = 0;
       public final static int joystickPort = 1;
-      public final static String drivingStyle = "TriggerHybrid";
+      public final static String defaultDrivingStyle = "TriggerHybrid";
    }
 }
