@@ -2,12 +2,14 @@ package frc.robot;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Cannon;
+import frc.robot.subsystems.Lifter;
 import frc.robot.util.PlayerControls;
 
 public class RobotContainer {
    //Subsystem definitions
    private DriveTrain driveTrain;
    private Cannon cannon;
+   private Lifter lifter;
    //Other definitions
    private PlayerControls playerControls;
 
@@ -15,7 +17,8 @@ public class RobotContainer {
       //Class initializations
       driveTrain = new DriveTrain();
       cannon = new Cannon();
-      playerControls = new PlayerControls(driveTrain, cannon);
+      lifter = new Lifter();
+      playerControls = new PlayerControls(driveTrain, cannon, lifter);
    }
 
    //Runs every 20ms, is tied to normal robot periodic
