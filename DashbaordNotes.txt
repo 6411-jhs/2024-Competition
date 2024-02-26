@@ -1,0 +1,19 @@
+--Things to have in dashboard--
+
+Readable:
+   - Angle of Cannon
+   - Speed input readout of drive train
+   - Speed input readout of falcon
+   - Graph of falcon power curve?
+   - Speed input readout of neos
+   - Commands Active (during teleop)
+   - Position of Servo
+   - Match Timer
+   - Whether or not the data is shown in teleop or auto mode
+
+Writable:
+   - Max speed of drive train
+   - Max speed of falcon
+   - Max speed of neos
+   - Drive train driving mode
+   - Auto command choosing
