@@ -18,6 +18,15 @@ Writable:
    - Drive train driving mode
    - Auto command choosing *
 
+Things to test:
+   1. Main:
+      - New dashboard positions
+      - Timer and current operation readout
+      - Tuning of the cannon parameters
+   
+
+
+
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

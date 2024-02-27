@@ -23,6 +23,7 @@ public class PlayerControls {
    private boolean reverseCannon = false;
    private boolean overrideFalconControls = false;
    private double drivetrainSpeedSet = 1;
+   private boolean servoToggle = false;
 
    public PlayerControls(DriveTrain p_drive, Cannon p_cannon){
       //Subsystem Saving
@@ -45,7 +46,7 @@ public class PlayerControls {
          drivetrainSpeedSet = 1;
       }));
 
-      //Joystick button routing; adds the cannon and angle setting controls
+      //Joystick button routing; adds the cannon controls
       joystick.trigger()
          .onTrue(Commands.runOnce(() -> {
             cannon.on(reverseCannon);
@@ -57,6 +58,12 @@ public class PlayerControls {
          reverseCannon = !reverseCannon;
       }));
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
+      joystick.button(3)
+         .onTrue(Commands.runOnce(() -> {
+            if (servoToggle)cannon.setServo(0);
+            else cannon.setServo(180);
+            servoToggle = !servoToggle;
+         }));
    }
 
    /**Runs the live input controls for the robot */

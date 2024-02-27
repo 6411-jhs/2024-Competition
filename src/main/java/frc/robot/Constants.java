@@ -16,6 +16,10 @@ public final class Constants {
       public final static int rightLCim = 8;
    }
 
+   public final class PWMAssignments {
+      public final static int mainCServo = 0;
+   }
+
    public final class DefaultSystemSpeeds {
       public final static double driveTrain = 1;
       public final static double neos = 1;

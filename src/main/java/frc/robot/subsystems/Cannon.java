@@ -5,6 +5,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
+import edu.wpi.first.wpilibj.Servo;
 
 import frc.robot.Constants;
 
@@ -13,11 +14,13 @@ public class Cannon extends SubsystemBase {
    private CANSparkMax leftNeo;
    private CANSparkMax rightNeo; 
    private TalonFX falcon;
+   private Servo servo;
 
    public double maxFalconSpeed = Constants.DefaultSystemSpeeds.neos;
    public double maxNeoSpeed = Constants.DefaultSystemSpeeds.neos;
    private double currentFalconSpeed = 0;
    private double currentNeoSpeed = 0;
+   private double servoDegree = 0;
    public Cannon(){
       //Motor controller initializations
       leftNeo = new CANSparkMax(Constants.CANAssignments.leftCNeo, CANSparkLowLevel.MotorType.kBrushless);
@@ -26,6 +29,7 @@ public class Cannon extends SubsystemBase {
       falcon = new TalonFX(Constants.CANAssignments.mainCFalcon);
       falcon.setPosition(0);
       falcon.setNeutralMode(NeutralModeValue.Brake);
+      servo = new Servo(Constants.PWMAssignments.mainCServo);
    }
 
    /**
@@ -113,5 +117,14 @@ public class Cannon extends SubsystemBase {
     */
    public double getCurrentNeoSpeed(){
       return currentNeoSpeed;
+   }
+
+   /**
+    * Sets the servo to a specified degree
+    * @param degree The degree to set the servo to; anywhere from  0-180
+    */
+   public void setServo(double degree){
+      double calcDegree = (150 / 180) * degree;
+      servo.setAngle(30 + calcDegree);
    }
 }
