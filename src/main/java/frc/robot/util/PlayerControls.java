@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Lifter;
 import frc.robot.subsystems.Cannon;
 import frc.robot.commands.SetCannonAngle;
 
@@ -15,6 +16,7 @@ public class PlayerControls {
    //Subsystems
    private DriveTrain drive;
    private Cannon cannon;
+   private Lifter lifter;
    //Other
    private CommandXboxController xbox;
    private CommandJoystick joystick;
@@ -24,10 +26,11 @@ public class PlayerControls {
    private boolean overrideFalconControls = false;
    private double drivetrainSpeedSet = 1;
 
-   public PlayerControls(DriveTrain p_drive, Cannon p_cannon){
+   public PlayerControls(DriveTrain p_drive, Cannon p_cannon, Lifter p_lifter){
       //Subsystem Saving
       drive = p_drive;
       cannon = p_cannon;
+      lifter = p_lifter;
       //Controller definitions
       xbox = new CommandXboxController(Constants.UserControls.xboxPort);
       joystick = new CommandJoystick(Constants.UserControls.joystickPort);
@@ -57,6 +60,22 @@ public class PlayerControls {
          reverseCannon = !reverseCannon;
       }));
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
+
+      //Lifter Controls
+      joystick.button(7)
+         .onTrue(Commands.runOnce(() -> {
+            lifter.on();
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.off();
+         }));
+      joystick.button(3)
+         .onTrue(Commands.runOnce(() -> {
+            lifter.setServo(180);
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.setServo(0);
+         }));
    }
 
    /**Runs the live input controls for the robot */
