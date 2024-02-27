@@ -16,8 +16,10 @@ public class RobotContainer {
    private PlayerControls playerControls;
    private DashboardControl dashboard;
 
+   private String currentOperationMode = "Periodic";
+
    public RobotContainer() {
-      //Class initializations
+      //System initializations
       driveTrain = new DriveTrain();
       cannon = new Cannon();
       lifter = new Lifter();
@@ -28,17 +30,20 @@ public class RobotContainer {
    //Runs every 20ms, is tied to normal robot periodic
    public void periodic(){
       playerControls.run();
-      dashboard.updateReadableData("Periodic");//!
+      dashboard.updateReadableData(currentOperationMode);
    }
 
    //When teleop starts...
    public void onTeleopStart(){
+      //Sets the current modes for miscellenous operation
+      currentOperationMode = "Teleop";
+      dashboard.startMatchTimer(currentOperationMode);
+
+      //Gets the config data from the dashboard entries and writes them to the subsystems accordingly
       HashMap<String, Double> configData = dashboard.getWrittenData();
-      System.out.println(configData.toString());
       driveTrain.setMaxSpeed(configData.get("driveTrainMax"));
       cannon.setMaxFalconSpeed(configData.get("falconMax"));
       cannon.setMaxNeoSpeed(configData.get("neosMax"));
-
       double driveMode = configData.get("driveMode");
       if (driveMode == 1){
          driveTrain.setDriveMode("Tank");
@@ -48,6 +53,27 @@ public class RobotContainer {
          driveTrain.setDriveMode("TriggerHybrid");
       }
 
+      //Resets the falcon encoder
       cannon.resetFalconEncoder();
+   }
+
+   /**When auto starts... */
+   public void onAutoStart(){
+      //Sets the current modes for miscellenous operation
+      currentOperationMode = "Auto";
+      dashboard.startMatchTimer(currentOperationMode);
+   }
+
+   /**When test starts... */
+   public void onTestStart(){
+      //Sets the current modes for miscellenous operation
+      currentOperationMode = "Test";
+      dashboard.startMatchTimer(currentOperationMode);
+   }
+
+   /**When bot is disabled */
+   public void onDisable(){
+      //Reset the match timer
+      dashboard.resetMatchTimer(currentOperationMode);
    }
 }

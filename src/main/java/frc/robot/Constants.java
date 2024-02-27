@@ -19,13 +19,18 @@ public final class Constants {
    public final class DefaultSystemSpeeds {
       public final static double driveTrain = 1;
       public final static double neos = 1;
-      public final static double falcon = 0.5;
-      public final static double cims = 0.5;
+      public final static double falcon = 1;
+      public final static double cims = 1;
    }
    
    public final class UserControls {
       public final static int xboxPort = 0;
       public final static int joystickPort = 1;
       public final static String defaultDrivingStyle = "TriggerHybrid";
+   }
+
+   public final class Other {
+      public final static int teleopDuration = 160;
+      public final static int autoDuration = 30;
    }
 }
