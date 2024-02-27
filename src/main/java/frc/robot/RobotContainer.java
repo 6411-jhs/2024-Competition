@@ -3,6 +3,7 @@ import java.util.HashMap;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Cannon;
+import frc.robot.subsystems.Lifter;
 import frc.robot.util.PlayerControls;
 import frc.robot.util.DashboardControl;
 
@@ -10,6 +11,7 @@ public class RobotContainer {
    //Subsystem definitions
    private DriveTrain driveTrain;
    private Cannon cannon;
+   private Lifter lifter;
    //Other definitions
    private PlayerControls playerControls;
    private DashboardControl dashboard;
@@ -20,8 +22,9 @@ public class RobotContainer {
       //System initializations
       driveTrain = new DriveTrain();
       cannon = new Cannon();
-      playerControls = new PlayerControls(driveTrain, cannon);
-      dashboard = new DashboardControl(driveTrain, cannon);
+      lifter = new Lifter();
+      playerControls = new PlayerControls(driveTrain, cannon, lifter);
+      dashboard = new DashboardControl(driveTrain, cannon, lifter);
    }
 
    //Runs every 20ms, is tied to normal robot periodic
@@ -41,6 +44,7 @@ public class RobotContainer {
       driveTrain.setMaxSpeed(configData.get("driveTrainMax"));
       cannon.setMaxFalconSpeed(configData.get("falconMax"));
       cannon.setMaxNeoSpeed(configData.get("neosMax"));
+      lifter.setMaxSpeed(configData.get("cimsMax"));
       double driveMode = configData.get("driveMode");
       if (driveMode == 1){
          driveTrain.setDriveMode("Tank");

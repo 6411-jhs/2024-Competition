@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 
 import frc.robot.subsystems.Cannon;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Lifter;
 import frc.robot.Constants;
 
 public class DashboardControl {
@@ -20,6 +21,7 @@ public class DashboardControl {
       GenericEntry maxDRTN;
       GenericEntry maxFLCN;
       GenericEntry maxNEOS;
+      GenericEntry maxCIMS;
       GenericEntry driveMode;
       GenericEntry autoCommand;
    }
@@ -29,6 +31,7 @@ public class DashboardControl {
       GenericEntry liveSpeedDTRNDirectional;
       GenericEntry liveSpeedFLCN;
       GenericEntry liveSpeedNEOS;
+      GenericEntry liveSpeedCIMS;
       GenericEntry robotOperationMode;
       GenericEntry matchTimerEntry;
    }
@@ -36,6 +39,7 @@ public class DashboardControl {
    //Subsystems
    private DriveTrain driveTrain;
    private Cannon cannon;
+   private Lifter lifter;
    //Dashboard Utility
    private ShuffleboardTab mainTab;
    public Writables writableEntries; 
@@ -45,10 +49,11 @@ public class DashboardControl {
    private Timer matchTimer;
    private double timerReadout = Constants.Other.teleopDuration;
 
-   public DashboardControl(DriveTrain p_driveTrain, Cannon p_cannon){
+   public DashboardControl(DriveTrain p_driveTrain, Cannon p_cannon, Lifter p_lifter){
       //Subsystem and timer definitions
       driveTrain = p_driveTrain;
       cannon = p_cannon;
+      lifter = p_lifter;
       matchTimer = new Timer();
 
       //Dashboard setup and definition
@@ -76,10 +81,16 @@ public class DashboardControl {
          .withSize(2,1)
          .withPosition(11, 2)
          .getEntry();
+      writableEntries.maxCIMS = mainTab.addPersistent("MAX Cim Speeds (Lifter)", Constants.DefaultSystemSpeeds.cims)
+         .withWidget(BuiltInWidgets.kNumberSlider)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .withSize(2,1)
+         .withPosition(11, 3)
+         .getEntry();
       writableEntries.driveMode = mainTab.addPersistent("Drive Mode", Constants.UserControls.defaultDrivingStyle)
          .withWidget(BuiltInWidgets.kTextView)
          .withSize(2,1)
-         .withPosition(11, 3)
+         .withPosition(11, 4)
          .getEntry();
       
       //Defines readable entries
@@ -113,14 +124,20 @@ public class DashboardControl {
          .withPosition(2,0)
          .withSize(3,3)
          .getEntry();
+      readableEntries.liveSpeedCIMS = mainTab.add("Cim Speed Input (Lifter)",0)
+         .withWidget(BuiltInWidgets.kNumberBar)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .withPosition(2,3)
+         .withSize(3,1)
+         .getEntry();
       readableEntries.robotOperationMode = mainTab.add("Robot Operation Mode","Null")
          .withWidget(BuiltInWidgets.kTextView)
-         .withPosition(11,4)
+         .withPosition(9,4)
          .withSize(1,1)
          .getEntry();
       readableEntries.matchTimerEntry = mainTab.add("Match Timer","2:30")
          .withWidget(BuiltInWidgets.kTextView)
-         .withPosition(12,4)
+         .withPosition(10,4)
          .withSize(1,1)
          .getEntry();
    }
@@ -155,9 +172,10 @@ public class DashboardControl {
       }
 
       //Gets the assigned data from the config entries
-      data.put("driveTrainMax",writableEntries.maxDRTN.getDouble(1));
-      data.put("falconMax",writableEntries.maxFLCN.getDouble(1));
-      data.put("neosMax",writableEntries.maxNEOS.getDouble(1));
+      data.put("driveTrainMax",writableEntries.maxDRTN.getDouble(Constants.DefaultSystemSpeeds.driveTrain));
+      data.put("falconMax",writableEntries.maxFLCN.getDouble(Constants.DefaultSystemSpeeds.falcon));
+      data.put("neosMax",writableEntries.maxNEOS.getDouble(Constants.DefaultSystemSpeeds.neos));
+      data.put("cimsMax",writableEntries.maxCIMS.getDouble(Constants.DefaultSystemSpeeds.cims));
       data.put("driveMode",driveModeTranslated);
       return data;
    }
@@ -178,10 +196,14 @@ public class DashboardControl {
       double cannonAngle = (cannon.getEncoder() / 100) * 360;
       readableEntries.cannonAngle.setDouble(cannonAngle);
 
+      //Lifter speeds
+      readableEntries.liveSpeedCIMS.setDouble(lifter.getCurrentSpeed());
+
       //Match/Operation Details
       readableEntries.robotOperationMode.setString(operationMode);
       double minute = Math.floor(timerReadout / 60);
       double second = timerReadout - (minute * 60);
+
       readableEntries.matchTimerEntry.setString(minute + ":" + second);
    }
 
