@@ -78,27 +78,27 @@ public class DashboardControl {
       
       //Defines readable entries
       readableEntries.cannonAngle = mainTab.add("Cannon Angle",0)
-         .withWidget(BuiltInWidgets.kGyro)
+         .withWidget(BuiltInWidgets.kDial)
          .withProperties(Map.of("min", 0, "max", 180))
          .getEntry();
       readableEntries.servoAngle = mainTab.add("Servo Angle",0)
          .withWidget(BuiltInWidgets.kGyro)
          .withProperties(Map.of("min", 0, "max", 180))
          .getEntry();
-      readableEntries.liveSpeedDTRNOverall = mainTab.add("DT Speed Input (Forward/Backward)",0)
+      readableEntries.liveSpeedDTRNOverall = mainTab.add("DT Speed Input (Overall)",0)
          .withWidget(BuiltInWidgets.kDial)
-         .withProperties(Map.of("min", 0, "max", 1))
+         .withProperties(Map.of("min", -1, "max", 1))
          .getEntry();
       readableEntries.liveSpeedDTRNDirectional = mainTab.add("DT Speed Input (Directional)",0)
          .withWidget(BuiltInWidgets.kDial)
-         .withProperties(Map.of("min", 0, "max", 1))
+         .withProperties(Map.of("min", -1, "max", 1))
          .getEntry();
       readableEntries.liveSpeedFLCN = mainTab.add("Falcon Speed Input (Cannon)",0)
-         .withWidget(BuiltInWidgets.kGraph)
+         .withWidget(BuiltInWidgets.kNumberBar)
          .withProperties(Map.of("min", 0, "max", 1))
          .getEntry();
       readableEntries.liveSpeedNEOS = mainTab.add("Neos Speed Input (Cannon)",0)
-         .withWidget(BuiltInWidgets.kGyro)
+         .withWidget(BuiltInWidgets.kGraph)
          .withProperties(Map.of("min", 0, "max", 1))
          .getEntry();
       readableEntries.robotOperationMode = mainTab.add("Robot Operation Mode","Null")
@@ -145,7 +145,7 @@ public class DashboardControl {
 
    public void updateReadableData(String operationMode){
       double[] driveTrainSpeed = driveTrain.getCurrentSpeed();
-      readableEntries.liveSpeedDTRNOverall.setDouble(driveTrainSpeed[0]);
+      readableEntries.liveSpeedDTRNOverall.setDouble(-driveTrainSpeed[0]);
       readableEntries.liveSpeedDTRNDirectional.setDouble(driveTrainSpeed[1]);
       readableEntries.liveSpeedFLCN.setDouble(cannon.getCurrentFalconSpeed());
       readableEntries.liveSpeedNEOS.setDouble(cannon.getCurrentNeoSpeed());
