@@ -14,6 +14,8 @@ public class DriveTrain extends SubsystemBase {
 
    public double maxSpeed = Constants.DefaultSystemSpeeds.driveTrain;
    public String driveMode = Constants.UserControls.defaultDrivingStyle;
+   private double currentSpeedOverall = 0;
+   private double currentSpeedDirectional = 0;
    public DriveTrain() {
       //Initializes motor controllers
       frontLeft = new WPI_VictorSPX(Constants.CANAssignments.frontLeftDT);
@@ -41,6 +43,8 @@ public class DriveTrain extends SubsystemBase {
     * @param rightSpeed The speed ranging from full power in reverse (-1) to full power forward (1). This controls the right motors on the DT.
     */
    public void tankDrive(double leftSpeed, double rightSpeed) {
+      currentSpeedOverall = ((leftSpeed * maxSpeed) + rightSpeed * maxSpeed) / 2;
+      currentSpeedDirectional = (leftSpeed * maxSpeed) - (rightSpeed * maxSpeed);
       drive.tankDrive(leftSpeed * maxSpeed, rightSpeed * maxSpeed);
    }
    /**
@@ -49,6 +53,8 @@ public class DriveTrain extends SubsystemBase {
     * @param direction The turning direction ranging from full left (-1) to full right (1). This varries the speed of one side of the DT to turn.
     */
    public void arcadeDrive(double speed, double direction){
+      currentSpeedOverall = speed * maxSpeed;
+      currentSpeedDirectional = direction * maxSpeed;
       drive.arcadeDrive(speed * maxSpeed, direction * maxSpeed);
    }
    /**
@@ -66,11 +72,32 @@ public class DriveTrain extends SubsystemBase {
       frontRight.set(speed * maxSpeed);
    }
 
+   /**
+    * Sets the maximum speed for the drive train (both directional and overall)
+    * @param speed The speed to set the drive train; anywhere between -1 and 1
+    */
    public void setMaxSpeed(double speed){
       maxSpeed = speed;
    }
 
+   /**
+    * Sets the drive mode for the drive train
+    * @param p_driveMode Drive mode being either "Tank", "Arcade", or "TriggerHybrid"
+    */
    public void setDriveMode(String p_driveMode){
       driveMode = p_driveMode;
+   }
+
+   /**
+    * Gets the current speed that's being inputted into the drive train.
+    * Please note that the speed calculation for tank drive isn't very accurate. Arcade works best
+    * @return An array of two speed values; one ([0]) for overall speed and one ([1]) for directional speed
+    */
+   public double[] getCurrentSpeed(){
+      double[] speed = {
+         currentSpeedOverall,
+         currentSpeedDirectional
+      };
+      return speed;
    }
 }

@@ -1,13 +1,16 @@
 package frc.robot.util;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Cannon;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
 
 public class DashboardControl {
@@ -19,31 +22,89 @@ public class DashboardControl {
       GenericEntry driveMode;
       GenericEntry autoCommand;
    }
+   @SuppressWarnings("unused")
+   private class Readables {
+      GenericEntry cannonAngle;
+      GenericEntry liveSpeedDTRNOverall;
+      GenericEntry liveSpeedDTRNDirectional;
+      GenericEntry liveSpeedFLCN;
+      GenericEntry liveSpeedNEOS;
+      GenericEntry servoAngle;
+      GenericEntry robotOperationMode;
+      GenericEntry matchTimerEntry;
+   }
 
-   private RobotContainer robotContainer;
+   private DriveTrain driveTrain;
+   private Cannon cannon;
    private ShuffleboardTab mainTab;
    public Writables writableEntries; 
+   public Readables readableEntries;
 
-   public DashboardControl(RobotContainer p_robotContainer){
-      robotContainer = p_robotContainer;
+   private Timer matchTimer;
+
+   public DashboardControl(DriveTrain p_driveTrain, Cannon p_cannon){
+      driveTrain = p_driveTrain;
+      cannon = p_cannon;
 
       mainTab = Shuffleboard.getTab("Main");
       Shuffleboard.selectTab("Main");
       writableEntries = new Writables();
+      readableEntries = new Readables();
 
+      //Defines writable entries
       writableEntries.maxDRTN = mainTab.addPersistent("MAX Drive Train Speed", Constants.DefaultSystemSpeeds.driveTrain)
          .withWidget(BuiltInWidgets.kNumberSlider)
          .withProperties(Map.of("min", 0, "max", 1))
+         .withSize(2,1)
+         .withPosition(11, 0)
          .getEntry();
       writableEntries.maxFLCN = mainTab.addPersistent("MAX Falcon Speed (Cannon)", Constants.DefaultSystemSpeeds.falcon)
          .withWidget(BuiltInWidgets.kNumberSlider)
          .withProperties(Map.of("min", 0, "max", 1))
+         .withSize(2,1)
+         .withPosition(11, 1)
          .getEntry();
       writableEntries.maxNEOS = mainTab.addPersistent("MAX Neo Speeds (Cannon)", Constants.DefaultSystemSpeeds.neos)
          .withWidget(BuiltInWidgets.kNumberSlider)
          .withProperties(Map.of("min", 0, "max", 1))
+         .withSize(2,1)
+         .withPosition(11, 2)
          .getEntry();
       writableEntries.driveMode = mainTab.addPersistent("Drive Mode", Constants.UserControls.defaultDrivingStyle)
+         .withWidget(BuiltInWidgets.kTextView)
+         .withSize(2,1)
+         .withPosition(11, 3)
+         .getEntry();
+      
+      //Defines readable entries
+      readableEntries.cannonAngle = mainTab.add("Cannon Angle",0)
+         .withWidget(BuiltInWidgets.kGyro)
+         .withProperties(Map.of("min", 0, "max", 180))
+         .getEntry();
+      readableEntries.servoAngle = mainTab.add("Servo Angle",0)
+         .withWidget(BuiltInWidgets.kGyro)
+         .withProperties(Map.of("min", 0, "max", 180))
+         .getEntry();
+      readableEntries.liveSpeedDTRNOverall = mainTab.add("DT Speed Input (Forward/Backward)",0)
+         .withWidget(BuiltInWidgets.kDial)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .getEntry();
+      readableEntries.liveSpeedDTRNDirectional = mainTab.add("DT Speed Input (Directional)",0)
+         .withWidget(BuiltInWidgets.kDial)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .getEntry();
+      readableEntries.liveSpeedFLCN = mainTab.add("Falcon Speed Input (Cannon)",0)
+         .withWidget(BuiltInWidgets.kGraph)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .getEntry();
+      readableEntries.liveSpeedNEOS = mainTab.add("Neos Speed Input (Cannon)",0)
+         .withWidget(BuiltInWidgets.kGyro)
+         .withProperties(Map.of("min", 0, "max", 1))
+         .getEntry();
+      readableEntries.robotOperationMode = mainTab.add("Robot Operation Mode","Null")
+         .withWidget(BuiltInWidgets.kTextView)
+         .getEntry();
+      readableEntries.matchTimerEntry = mainTab.add("Match Timer","2:30")
          .withWidget(BuiltInWidgets.kTextView)
          .getEntry();
    }
@@ -80,5 +141,19 @@ public class DashboardControl {
       data.put("neosMax",writableEntries.maxNEOS.getDouble(1));
       data.put("driveMode",driveModeTranslated);
       return data;
+   }
+
+   public void updateReadableData(String operationMode){
+      double[] driveTrainSpeed = driveTrain.getCurrentSpeed();
+      readableEntries.liveSpeedDTRNOverall.setDouble(driveTrainSpeed[0]);
+      readableEntries.liveSpeedDTRNDirectional.setDouble(driveTrainSpeed[1]);
+      readableEntries.liveSpeedFLCN.setDouble(cannon.getCurrentFalconSpeed());
+      readableEntries.liveSpeedNEOS.setDouble(cannon.getCurrentNeoSpeed());
+      double cannonAngle = (cannon.getEncoder() / 100) * 360;
+      readableEntries.cannonAngle.setDouble(cannonAngle);
+      readableEntries.robotOperationMode.setString(operationMode);
+   }
+
+   public void startMatchTimer(){//!
    }
 }

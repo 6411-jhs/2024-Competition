@@ -19,12 +19,13 @@ public class RobotContainer {
       driveTrain = new DriveTrain();
       cannon = new Cannon();
       playerControls = new PlayerControls(driveTrain, cannon);
-      dashboard = new DashboardControl(this);
+      dashboard = new DashboardControl(driveTrain, cannon);
    }
 
    //Runs every 20ms, is tied to normal robot periodic
    public void periodic(){
       playerControls.run();
+      dashboard.updateReadableData("Periodic");//!
    }
 
    //When teleop starts...
