@@ -1,69 +1,13 @@
---Things to have in dashboard--
+--Things to test--
 
-Readable:
-   - Angle of Cannon
-   - Speed input readout of drive train
-   - Speed input readout of falcon
-   - Graph of falcon power curve?
-   - Speed input readout of neos
-   - Position of Servo *
-   - Match Timer
-   - Whether or not the data is shown in teleop or auto mode
-   - Lifter position *
-
-Writable:
-   - Max speed of drive train
-   - Max speed of falcon
-   - Max speed of neos
-   - Drive train driving mode
-   - Auto command choosing *
-
-- New dsahboard positions
-- Match timer and operations readouts
-- Cannon Tuning
-
-- Dashboard getWrittenData default value references (constants)
-- Constants reference to Cims
-
-package frc.robot.subsystems;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.Servo;
-
-public class Lifter extends SubsystemBase {
-   private WPI_VictorSPX leftMotor;
-   private WPI_VictorSPX rightMotor;
-   private Servo servo;
-   public Lifter(){
-      leftMotor = new WPI_VictorSPX(Constants.CANAssignments.leftLCim);
-      rightMotor = new WPI_VictorSPX(Constants.CANAssignments.rightLCim);
-      servo = new Servo(0);
-   }
-
-   public void on(){
-      leftMotor.set(Constants.DefaultSystemSpeeds.cims);
-      rightMotor.set(Constants.DefaultSystemSpeeds.cims);
-   }
-
-   public void off(){
-      leftMotor.set(0);
-      rightMotor.set(0);
-   }
-
-   /**
-    * Sets the servo to a specific degree measurment
-    * @param degree Any degree ranging from 0-180 (0 being start pos, 180 being 180 degrees)
-    */
-   public void setServo(double degree){
-      double calcDegree = (150 / 180) * degree;
-      servo.setAngle(30 + calcDegree);
-   }
-}
-
-readableEntries.servoAngle = mainTab.add("Servo Angle",0)
-         .withWidget(BuiltInWidgets.kGyro)
-         .withProperties(Map.of("min", 0, "max", 180))
-         .getEntry();
+1. Main:
+   - Dashboard Initialization
+   - Match timer functionality
+   - Operation functionality
+   - Cannon angle tuning
+2. Servo:
+   - Servo functionality
+3. Lifter:
+   - Lifter functionality
+4. Camera:
+   - Camera functionality
