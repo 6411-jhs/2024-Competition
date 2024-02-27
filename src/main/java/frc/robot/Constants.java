@@ -2,10 +2,10 @@ package frc.robot;
 
 public final class Constants {
    public final class CANAssignments {
-      public final static int frontLeftDT = 0;
-      public final static int backLeftDT = 1;
-      public final static int frontRightDT = 2;
-      public final static int backRightDT = 3;
+      public final static int frontLeftDT = 2;
+      public final static int backLeftDT = 3;
+      public final static int frontRightDT = 1;
+      public final static int backRightDT = 0;
 
       public final static int leftCNeo = 4;
       public final static int rightCNeo = 5;

@@ -30,6 +30,7 @@ public class RobotContainer {
    //When teleop starts...
    public void onTeleopStart(){
       HashMap<String, Double> configData = dashboard.getWrittenData();
+      System.out.println(configData.toString());
       driveTrain.setMaxSpeed(configData.get("driveTrainMax"));
       cannon.setMaxFalconSpeed(configData.get("falconMax"));
       cannon.setMaxNeoSpeed(configData.get("neosMax"));

@@ -28,6 +28,8 @@ public class DriveTrain extends SubsystemBase {
       backRight.follow(frontRight);
       frontRight.setInverted(false);
       backRight.setInverted(false);
+      frontLeft.setInverted(true);
+      backLeft.setInverted(true);
 
       //Initializes the drive train object
       drive = new DifferentialDrive(frontLeft, frontRight);
