@@ -161,9 +161,9 @@ public class DashboardControl {
       }
 
       //Gets the assigned data from the config entries
-      data.put("driveTrainMax",writableEntries.maxDRTN.getDouble(1));
-      data.put("falconMax",writableEntries.maxFLCN.getDouble(1));
-      data.put("neosMax",writableEntries.maxNEOS.getDouble(1));
+      data.put("driveTrainMax",writableEntries.maxDRTN.getDouble(Constants.DefaultSystemSpeeds.driveTrain));
+      data.put("falconMax",writableEntries.maxFLCN.getDouble(Constants.DefaultSystemSpeeds.falcon));
+      data.put("neosMax",writableEntries.maxNEOS.getDouble(Constants.DefaultSystemSpeeds.neos));
       data.put("driveMode",driveModeTranslated);
       return data;
    }

@@ -24,7 +24,6 @@ public final class Constants {
       public final static double driveTrain = 1;
       public final static double neos = 1;
       public final static double falcon = 1;
-      public final static double cims = 1;
    }
    
    public final class UserControls {
