@@ -62,19 +62,19 @@ public class PlayerControls {
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
 
       //Lifter Controls
-      joystick.button(7)
-         .onTrue(Commands.runOnce(() -> {
-            lifter.on();
-         }))
-         .onFalse(Commands.runOnce(() -> {
-            lifter.off();
-         }));
+      // joystick.button(7)
+      //    .onTrue(Commands.runOnce(() -> {
+      //       lifter.on();
+      //    }))
+      //    .onFalse(Commands.runOnce(() -> {
+      //       lifter.off();
+      //    }));
       joystick.button(3)
          .onTrue(Commands.runOnce(() -> {
             lifter.setServo(180);
          }))
          .onFalse(Commands.runOnce(() -> {
-            lifter.setServo(0);
+            lifter.setServo(30);
          }));
    }
 
