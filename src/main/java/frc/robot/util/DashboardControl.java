@@ -23,14 +23,12 @@ public class DashboardControl {
       GenericEntry driveMode;
       GenericEntry autoCommand;
    }
-   @SuppressWarnings("unused")
    private class Readables { //Readable entries; the user sees data being outputting from these (not changeable)
       GenericEntry cannonAngle;
       GenericEntry liveSpeedDTRNOverall;
       GenericEntry liveSpeedDTRNDirectional;
       GenericEntry liveSpeedFLCN;
       GenericEntry liveSpeedNEOS;
-      GenericEntry servoAngle;
       GenericEntry robotOperationMode;
       GenericEntry matchTimerEntry;
    }
@@ -90,10 +88,6 @@ public class DashboardControl {
          .withProperties(Map.of("min", 0, "max", 180))
          .withPosition(5,1)
          .withSize(2,2)
-         .getEntry();
-      readableEntries.servoAngle = mainTab.add("Servo Angle",0)
-         .withWidget(BuiltInWidgets.kGyro)
-         .withProperties(Map.of("min", 0, "max", 180))
          .getEntry();
       readableEntries.liveSpeedDTRNOverall = mainTab.add("DT Speed Input (Overall)",0)
          .withWidget(BuiltInWidgets.kDial)

@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Cannon;
-import frc.robot.subsystems.Lifter;
 import frc.robot.util.PlayerControls;
 import frc.robot.util.DashboardControl;
 
@@ -11,7 +10,6 @@ public class RobotContainer {
    //Subsystem definitions
    private DriveTrain driveTrain;
    private Cannon cannon;
-   private Lifter lifter;
    //Other definitions
    private PlayerControls playerControls;
    private DashboardControl dashboard;
@@ -22,8 +20,7 @@ public class RobotContainer {
       //System initializations
       driveTrain = new DriveTrain();
       cannon = new Cannon();
-      lifter = new Lifter();
-      playerControls = new PlayerControls(driveTrain, cannon, lifter);
+      playerControls = new PlayerControls(driveTrain, cannon);
       dashboard = new DashboardControl(driveTrain, cannon);
    }
 
