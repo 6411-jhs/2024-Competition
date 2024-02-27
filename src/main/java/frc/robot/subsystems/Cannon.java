@@ -20,7 +20,7 @@ public class Cannon extends SubsystemBase {
    public double maxNeoSpeed = Constants.DefaultSystemSpeeds.neos;
    private double currentFalconSpeed = 0;
    private double currentNeoSpeed = 0;
-   private double servoDegree = 0;
+   private double currentServoAngle = 0;
    public Cannon(){
       //Motor controller initializations
       leftNeo = new CANSparkMax(Constants.CANAssignments.leftCNeo, CANSparkLowLevel.MotorType.kBrushless);
@@ -124,7 +124,16 @@ public class Cannon extends SubsystemBase {
     * @param degree The degree to set the servo to; anywhere from  0-180
     */
    public void setServo(double degree){
+      currentServoAngle = degree;
       double calcDegree = (150 / 180) * degree;
       servo.setAngle(30 + calcDegree);
+   }
+
+   /**
+    * Gets the current degree angle the servo is set to
+    * @return The angle from 0-180 degrees
+    */
+   public double getCurrentServoAngle(){
+      return currentServoAngle;
    }
 }

@@ -29,6 +29,7 @@ public class DashboardControl {
       GenericEntry liveSpeedDTRNDirectional;
       GenericEntry liveSpeedFLCN;
       GenericEntry liveSpeedNEOS;
+      GenericEntry servoAngle;
       GenericEntry robotOperationMode;
       GenericEntry matchTimerEntry;
    }
@@ -113,6 +114,11 @@ public class DashboardControl {
          .withPosition(2,0)
          .withSize(3,3)
          .getEntry();
+      readableEntries.servoAngle = mainTab.add("Servo Angle (Cannon)",0)
+         .withWidget(BuiltInWidgets.kGyro)
+         .withPosition(5,3)
+         .withSize(2,2)
+         .getEntry();
       readableEntries.robotOperationMode = mainTab.add("Robot Operation Mode","Null")
          .withWidget(BuiltInWidgets.kTextView)
          .withPosition(11,4)
@@ -172,11 +178,12 @@ public class DashboardControl {
       readableEntries.liveSpeedDTRNOverall.setDouble(-driveTrainSpeed[0]);
       readableEntries.liveSpeedDTRNDirectional.setDouble(driveTrainSpeed[1]);
 
-      //Cannon Speeds and angle
+      //Cannon Speeds and angle (along with servo)
       readableEntries.liveSpeedFLCN.setDouble(cannon.getCurrentFalconSpeed());
       readableEntries.liveSpeedNEOS.setDouble(cannon.getCurrentNeoSpeed());
       double cannonAngle = (cannon.getEncoder() / 100) * 360;
       readableEntries.cannonAngle.setDouble(cannonAngle);
+      readableEntries.servoAngle.setDouble(cannon.getCurrentServoAngle());
 
       //Match/Operation Details
       readableEntries.robotOperationMode.setString(operationMode);

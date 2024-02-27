@@ -23,7 +23,6 @@ public class PlayerControls {
    private boolean reverseCannon = false;
    private boolean overrideFalconControls = false;
    private double drivetrainSpeedSet = 1;
-   private boolean servoToggle = false;
 
    public PlayerControls(DriveTrain p_drive, Cannon p_cannon){
       //Subsystem Saving
@@ -60,9 +59,10 @@ public class PlayerControls {
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
       joystick.button(3)
          .onTrue(Commands.runOnce(() -> {
-            if (servoToggle)cannon.setServo(0);
-            else cannon.setServo(180);
-            servoToggle = !servoToggle;
+            cannon.setServo(180);
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            cannon.setServo(0);
          }));
    }
 
