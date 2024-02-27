@@ -17,8 +17,8 @@ public class Lifter extends SubsystemBase {
    }
 
    public void on(){
-      leftMotor.set(Constants.MAXSystemSpeeds.cims);
-      rightMotor.set(Constants.MAXSystemSpeeds.cims);
+      leftMotor.set(Constants.DefaultSystemSpeeds.cims);
+      rightMotor.set(Constants.DefaultSystemSpeeds.cims);
    }
 
    public void off(){

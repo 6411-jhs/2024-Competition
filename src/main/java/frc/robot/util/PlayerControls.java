@@ -86,7 +86,7 @@ public class PlayerControls {
 
    /**Takes the xbox controller joystick axis values and operates the drive train based on chosen mode */
    private void driveTrainControls(){
-      switch(Constants.UserControls.drivingStyle){
+      switch(drive.driveMode){
          //If drive train mode is set to tank drive; operate tank drive
          case "Tank":
             drive.tankDrive(xbox.getLeftY() * drivetrainSpeedSet, xbox.getRightY() * drivetrainSpeedSet);
@@ -97,7 +97,7 @@ public class PlayerControls {
             break;
          //If drive train mode is set to trigger hybrid drive; operate trigger hybrid drive
          case "TriggerHybrid":
-            drive.arcadeDrive((xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis()) * drivetrainSpeedSet, xbox.getLeftX() * drivetrainSpeedSet);
+            drive.arcadeDrive((xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis()) * -drivetrainSpeedSet, xbox.getLeftX() * drivetrainSpeedSet);
             break;
       }
    }

@@ -3,8 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Cannon;
 
-import frc.robot.Constants.MAXSystemSpeeds;
-
 public class SetCannonAngle extends Command {
    //Target parameters and cannon subsystem
    private class TargetParams {
@@ -89,11 +87,11 @@ public class SetCannonAngle extends Command {
     * @param speed The desired speed to set the falcon (max speed constant not in condideration)
     */
    private void setFalconExtended(double speed){
-      if (speed > MAXSystemSpeeds.falcon){
+      if (speed > cannon.maxFalconSpeed){
          //If the specified speed is above the max speed constant, use the max speed constant as its full power value
          cannon.setFalcon((powerIsNegative)
-            ? -MAXSystemSpeeds.falcon
-            : MAXSystemSpeeds.falcon
+            ? -cannon.maxFalconSpeed
+            : cannon.maxFalconSpeed
          , true);
       } else {
          //If the specified speed is below or equal to the max speed constant, use the specified speed
