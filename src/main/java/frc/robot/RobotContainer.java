@@ -37,6 +37,7 @@ public class RobotContainer {
    public void onTeleopStart(){
       //Sets the current modes for miscellenous operation
       currentOperationMode = "Teleop";
+      dashboard.resetMatchTimer(currentOperationMode);
       dashboard.startMatchTimer(currentOperationMode);
 
       //Gets the config data from the dashboard entries and writes them to the subsystems accordingly
@@ -62,6 +63,7 @@ public class RobotContainer {
    public void onAutoStart(){
       //Sets the current modes for miscellenous operation
       currentOperationMode = "Auto";
+      dashboard.resetMatchTimer(currentOperationMode);
       dashboard.startMatchTimer(currentOperationMode);
    }
 
@@ -69,6 +71,7 @@ public class RobotContainer {
    public void onTestStart(){
       //Sets the current modes for miscellenous operation
       currentOperationMode = "Test";
+      dashboard.resetMatchTimer(currentOperationMode);
       dashboard.startMatchTimer(currentOperationMode);
    }
 
