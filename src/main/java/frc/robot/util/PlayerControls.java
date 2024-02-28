@@ -92,7 +92,7 @@ public class PlayerControls {
             lifter.offRight();
          }));
 
-      //Joystick button routing; adds the cannon and angle setting controls
+      //Joystick button routing; adds the cannon controls
       joystick.trigger()
          .onTrue(Commands.runOnce(() -> {
             cannon.on(reverseCannon);
@@ -104,6 +104,13 @@ public class PlayerControls {
          reverseCannon = !reverseCannon;
       }));
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
+      joystick.button(3)
+         .onTrue(Commands.runOnce(() -> {
+            cannon.setServo(160);
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            cannon.setServo(100);
+         }));
    }
 
    /**Runs the live input controls for the robot */
