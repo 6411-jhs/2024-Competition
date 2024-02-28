@@ -1,9 +1,9 @@
 --Things to test--
 
 1. Main:
-   - Dashboard Initialization
-   - Match timer functionality
-   - Operation functionality
+   - X Dashboard Initialization
+   - X Match timer functionality
+   - X Operation functionality
    - Cannon angle tuning
 2. Servo:
    - Servo functionality
