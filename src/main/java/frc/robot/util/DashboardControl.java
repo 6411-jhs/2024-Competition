@@ -63,7 +63,8 @@ public class DashboardControl {
       matchTimer.schedule(new TimerTask() {
          @Override
          public void run() {
-             if (matchTimerActive && timerReadout >= 0.1) timerReadout -= 0.1;
+             if ((float) timerReadout <= (float) 0.1) timerReadout = 0;
+             if (matchTimerActive && timerReadout > 0.2) timerReadout -= 0.1;
          }
       }, 0, 100);
 

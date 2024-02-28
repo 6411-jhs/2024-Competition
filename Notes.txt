@@ -1,13 +1,11 @@
---Things to test--
-
-1. Main:
-   - X Dashboard Initialization
-   - X Match timer functionality
-   - X Operation functionality
-   - Cannon angle tuning
-2. Servo:
-   - Servo functionality
-3. Lifter:
-   - Lifter functionality
-4. Camera:
-   - Camera functionality
+Things that need to be done:
+   - Test if right cim is working correctly
+   - Get left arm mounted
+   - Replace PWM extension
+   - Get camera mounted
+   - Get servo mounted
+   - Tidy up wires
+   - Mount vinal sponsor logos
+   - Make sure safety light is working
+   - Fasten PWM and Safety light wires
+   - Veryify all functionalities work as intended

@@ -1,4 +1,6 @@
 package frc.robot.util;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,11 +22,15 @@ public class PlayerControls {
    //Other
    private CommandXboxController xbox;
    private CommandJoystick joystick;
+   private Timer lifterTimer;
    private SetCannonAngle setAngle90;
    //Local Parameters
    private boolean reverseCannon = false;
    private boolean overrideFalconControls = false;
    private double drivetrainSpeedSet = 1;
+   private double lifterTimeRaiseAmount = 0.4;
+   private double lifterTimeCounter = 0;
+   private boolean lifterActive = false;
 
    public PlayerControls(DriveTrain p_drive, Cannon p_cannon, Lifter p_lifter){
       //Subsystem Saving
@@ -34,6 +40,29 @@ public class PlayerControls {
       //Controller definitions
       xbox = new CommandXboxController(Constants.UserControls.xboxPort);
       joystick = new CommandJoystick(Constants.UserControls.joystickPort);
+
+      lifterTimer = new Timer();
+      lifterTimer.schedule(new TimerTask() {
+         @Override
+         public void run() {
+             if (lifterActive){
+               if (lifterTimeCounter < lifterTimeRaiseAmount){
+                  lifter.on();
+                  lifterTimeCounter += 0.01;
+               } else {
+                  lifter.off();
+               }
+             } else {
+               if (lifterTimeCounter > 0){
+                  lifter.reverse();
+                  lifterTimeCounter -= 0.01;
+               } else {
+                  lifter.off();
+               }
+             }
+         }
+      }, 0, 10);
+      
       //Command definitions
       setAngle90 = new SetCannonAngle(cannon, 90);
 
@@ -47,49 +76,17 @@ public class PlayerControls {
       xbox.y().onTrue(Commands.runOnce(() -> {
          drivetrainSpeedSet = 1;
       }));
-      // xbox.start()
-      //    .onTrue(Commands.runOnce(() -> {
-      //       lifter.on();
-      //    }))
-      //    .onFalse(Commands.runOnce(() -> {
-      //       lifter.off();
-      //    }));
-      xbox.povUp()
+      xbox.start()
          .onTrue(Commands.runOnce(() -> {
-            lifter.onLeft();
-         }))
-         .onFalse(Commands.runOnce(() -> {
-            lifter.offLeft();
+            lifterActive = !lifterActive;
          }));
-      xbox.povDown()
-         .onTrue(Commands.runOnce(() -> {
-            lifter.reverseLeft();
-         }))
-         .onFalse(Commands.runOnce(() -> {
-            lifter.offLeft();
-         }));
-      xbox.povRight()
-         .onTrue(Commands.runOnce(() -> {
-            lifter.onRight();
-         }))
-         .onFalse(Commands.runOnce(() -> {
-            lifter.offRight();
-         }));
-      xbox.povLeft()
-         .onTrue(Commands.runOnce(() -> {
-            lifter.reverseRight();
-         }))
-         .onFalse(Commands.runOnce(() -> {
-            lifter.offRight();
-         }));
+      
       xbox.x()
          .onTrue(Commands.runOnce(() -> {
-            lifter.onRight();;
-            lifter.onLeft();
+            lifter.test(0.4);
          }))
          .onFalse(Commands.runOnce(() -> {
-            lifter.offLeft();
-            lifter.offRight();
+            lifter.test(0);
          }));
 
       //Joystick button routing; adds the cannon controls

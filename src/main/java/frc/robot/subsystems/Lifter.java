@@ -17,33 +17,22 @@ public class Lifter extends SubsystemBase {
       leftMotor.setInverted(true);
    }
 
-   double speed1 = 0.5;
-   double speed2 = 0.5;
-   public void onLeft(){
+   public void on(){
       currentSpeed = maxSpeed;
-      leftMotor.set(speed1);
-   }
-   public void reverseLeft(){
-      currentSpeed = maxSpeed;
-      leftMotor.set(-speed1);
+      leftMotor.set(maxSpeed);
+      rightMotor.set(maxSpeed);
    }
 
-   public void onRight(){
-      currentSpeed = maxSpeed;
-      rightMotor.set(speed2);
-   }
-   public void reverseRight(){
-      currentSpeed = maxSpeed;
-      rightMotor.set(-speed2);
-   }
-
-   public void offLeft(){
+   public void off(){
       currentSpeed = 0;
       leftMotor.set(0);
+      rightMotor.set(0);
    }
 
-   public void offRight(){
-      rightMotor.set(0);
+   public void reverse(){
+      currentSpeed = -maxSpeed;
+      leftMotor.set(-maxSpeed);
+      rightMotor.set(-maxSpeed);
    }
 
    public void setMaxSpeed(double speed){
@@ -52,5 +41,9 @@ public class Lifter extends SubsystemBase {
 
    public double getCurrentSpeed(){
       return currentSpeed;
+   }
+
+   public void test(double speed){
+      rightMotor.set(speed);
    }
 }

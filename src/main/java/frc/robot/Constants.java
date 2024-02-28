@@ -12,8 +12,8 @@ public final class Constants {
 
       public final static int mainCFalcon = 6;
 
-      public final static int leftLCim = 8;
-      public final static int rightLCim = 7;
+      public final static int leftLCim = 7;
+      public final static int rightLCim = 8;
    }
 
    public final class PWMAssignments {
@@ -35,6 +35,6 @@ public final class Constants {
 
    public final class Other {
       public final static int teleopDuration = 160;
-      public final static int autoDuration = 30;
+      public final static int autoDuration = 5;
    }
 }
