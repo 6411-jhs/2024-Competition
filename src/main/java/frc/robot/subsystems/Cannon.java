@@ -125,8 +125,8 @@ public class Cannon extends SubsystemBase {
     */
    public void setServo(double degree){
       currentServoAngle = degree;
-      double calcDegree = (150 / 180) * degree;
-      servo.setAngle(30 + calcDegree);
+      // double calcDegree = (147.0 / 180.0) * degree;
+      servo.setAngle(degree);
    }
 
    /**
