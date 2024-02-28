@@ -33,8 +33,8 @@ public class DashboardControl {
       GenericEntry liveSpeedDTRNDirectional;
       GenericEntry liveSpeedFLCN;
       GenericEntry liveSpeedNEOS;
-      GenericEntry servoAngle;
       GenericEntry liveSpeedCIMS;
+      GenericEntry servoAngle;
       GenericEntry robotOperationMode;
       GenericEntry matchTimerEntry;
    }
@@ -138,16 +138,16 @@ public class DashboardControl {
          .withPosition(2,0)
          .withSize(3,3)
          .getEntry();
-      readableEntries.servoAngle = mainTab.add("Servo Angle (Cannon)",0)
-         .withWidget(BuiltInWidgets.kGyro)
-         .withPosition(5,3)
-         .withSize(2,2)
-         .getEntry();
       readableEntries.liveSpeedCIMS = mainTab.add("Cim Speed Input (Lifter)",0)
          .withWidget(BuiltInWidgets.kNumberBar)
          .withProperties(Map.of("min", 0, "max", 1))
          .withPosition(2,3)
          .withSize(3,1)
+         .getEntry();
+      readableEntries.servoAngle = mainTab.add("Servo Angle (Cannon)",0)
+         .withWidget(BuiltInWidgets.kGyro)
+         .withPosition(5,3)
+         .withSize(2,2)
          .getEntry();
       readableEntries.robotOperationMode = mainTab.add("Robot Operation Mode","Null")
          .withWidget(BuiltInWidgets.kTextView)
