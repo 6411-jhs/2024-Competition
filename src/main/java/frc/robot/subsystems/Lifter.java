@@ -14,6 +14,7 @@ public class Lifter extends SubsystemBase {
    public Lifter(){
       leftMotor = new WPI_VictorSPX(Constants.CANAssignments.leftLCim);
       rightMotor = new WPI_VictorSPX(Constants.CANAssignments.rightLCim);
+      leftMotor.setInverted(true);
    }
 
    double speed1 = 0.5;

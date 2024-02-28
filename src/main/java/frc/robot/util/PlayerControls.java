@@ -82,6 +82,15 @@ public class PlayerControls {
          .onFalse(Commands.runOnce(() -> {
             lifter.offRight();
          }));
+      xbox.x()
+         .onTrue(Commands.runOnce(() -> {
+            lifter.onRight();;
+            lifter.onLeft();
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.offLeft();
+            lifter.offRight();
+         }));
 
       //Joystick button routing; adds the cannon and angle setting controls
       joystick.trigger()
