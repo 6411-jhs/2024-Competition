@@ -45,12 +45,19 @@ public class DashboardControl {
    //Match Timer Utility
    private Timer matchTimer;
    private double timerReadout = Constants.Other.teleopDuration;
+   private boolean matchTimerActive = false;
 
    public DashboardControl(DriveTrain p_driveTrain, Cannon p_cannon){
       //Subsystem and timer definitions
       driveTrain = p_driveTrain;
       cannon = p_cannon;
       matchTimer = new Timer();
+      matchTimer.schedule(new TimerTask() {
+         @Override
+         public void run() {
+             if (matchTimerActive && timerReadout >= 0.1) timerReadout -= 0.1;
+         }
+      }, 0, 100);
 
       //Dashboard setup and definition
       mainTab = Shuffleboard.getTab("Main");
@@ -187,8 +194,8 @@ public class DashboardControl {
 
       //Match/Operation Details
       readableEntries.robotOperationMode.setString(operationMode);
-      double minute = Math.floor(timerReadout / 60);
-      double second = timerReadout - (minute * 60);
+      int minute = (int) Math.floor(timerReadout / 60);
+      float second =  (float) (timerReadout - (minute * 60));
       readableEntries.matchTimerEntry.setString(minute + ":" + second);
    }
 
@@ -197,30 +204,18 @@ public class DashboardControl {
     * @param operationMode Which time amount to start at (see Constants.Other for further info)
     */
    public void startMatchTimer(String operationMode){
-      //Sets the time
-      if (operationMode == "Auto"){
-         timerReadout = Constants.Other.autoDuration;
-      } else {
-         timerReadout = Constants.Other.teleopDuration;
-      }
-      //Schedules the timing task to count down by 0.1s (if it is not 0)
-      matchTimer.scheduleAtFixedRate(new TimerTask(){
-         @Override
-         public void run() {
-            if (timerReadout >= 0.1) timerReadout -= 0.1;
-         }
-      }, 0, 100);
+      matchTimerActive = true;
    }
    /**Pauses the timer */
    public void pauseMatchTimer(){
-      matchTimer.cancel();
+      matchTimerActive = false;
    }
    /**
     * Resets the timer to its original state before it was started
     * @param operationMode What time to reset to
     */
    public void resetMatchTimer(String operationMode){
-      matchTimer.cancel();
+      pauseMatchTimer();
       if (operationMode == "Auto"){
          timerReadout = Constants.Other.autoDuration;
       } else {
