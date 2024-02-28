@@ -16,15 +16,32 @@ public class Lifter extends SubsystemBase {
       rightMotor = new WPI_VictorSPX(Constants.CANAssignments.rightLCim);
    }
 
-   public void on(){
+   double speed1 = 0.5;
+   double speed2 = 0.5;
+   public void onLeft(){
       currentSpeed = maxSpeed;
-      leftMotor.set(maxSpeed);
-      rightMotor.set(maxSpeed);
+      leftMotor.set(speed1);
+   }
+   public void reverseLeft(){
+      currentSpeed = maxSpeed;
+      leftMotor.set(-speed1);
    }
 
-   public void off(){
+   public void onRight(){
+      currentSpeed = maxSpeed;
+      rightMotor.set(speed2);
+   }
+   public void reverseRight(){
+      currentSpeed = maxSpeed;
+      rightMotor.set(-speed2);
+   }
+
+   public void offLeft(){
       currentSpeed = 0;
       leftMotor.set(0);
+   }
+
+   public void offRight(){
       rightMotor.set(0);
    }
 

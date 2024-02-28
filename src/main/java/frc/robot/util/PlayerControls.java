@@ -47,12 +47,40 @@ public class PlayerControls {
       xbox.y().onTrue(Commands.runOnce(() -> {
          drivetrainSpeedSet = 1;
       }));
-      xbox.start()
-         .whileTrue(Commands.runOnce(() -> {
-            lifter.on();
+      // xbox.start()
+      //    .onTrue(Commands.runOnce(() -> {
+      //       lifter.on();
+      //    }))
+      //    .onFalse(Commands.runOnce(() -> {
+      //       lifter.off();
+      //    }));
+      xbox.povUp()
+         .onTrue(Commands.runOnce(() -> {
+            lifter.onLeft();
          }))
          .onFalse(Commands.runOnce(() -> {
-            lifter.off();
+            lifter.offLeft();
+         }));
+      xbox.povDown()
+         .onTrue(Commands.runOnce(() -> {
+            lifter.reverseLeft();
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.offLeft();
+         }));
+      xbox.povRight()
+         .onTrue(Commands.runOnce(() -> {
+            lifter.onRight();
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.offRight();
+         }));
+      xbox.povLeft()
+         .onTrue(Commands.runOnce(() -> {
+            lifter.reverseRight();
+         }))
+         .onFalse(Commands.runOnce(() -> {
+            lifter.offRight();
          }));
 
       //Joystick button routing; adds the cannon and angle setting controls

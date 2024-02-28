@@ -12,8 +12,8 @@ public final class Constants {
 
       public final static int mainCFalcon = 6;
 
-      public final static int leftLCim = 7;
-      public final static int rightLCim = 8;
+      public final static int leftLCim = 8;
+      public final static int rightLCim = 7;
    }
 
    public final class DefaultSystemSpeeds {
