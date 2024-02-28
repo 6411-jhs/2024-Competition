@@ -6,6 +6,8 @@ import java.util.TimerTask;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 
@@ -38,6 +40,7 @@ public class DashboardControl {
    private Cannon cannon;
    //Dashboard Utility
    private ShuffleboardTab mainTab;
+   private UsbCamera camera;
    public Writables writableEntries; 
    public Readables readableEntries;
 
@@ -63,6 +66,9 @@ public class DashboardControl {
       Shuffleboard.selectTab("Main");
       writableEntries = new Writables();
       readableEntries = new Readables();
+      camera = CameraServer.startAutomaticCapture();
+      camera.setResolution(640, 640);
+      camera.setFPS(20);
 
       //Defines writable entries
       writableEntries.maxDRTN = mainTab.addPersistent("MAX Drive Train Speed", Constants.DefaultSystemSpeeds.driveTrain)
@@ -130,6 +136,13 @@ public class DashboardControl {
          .withPosition(12,4)
          .withSize(1,1)
          .getEntry();
+
+      //* If it doesn't work take a look at this link: https://www.chiefdelphi.com/t/adding-camera-stream-to-shuffleboard-using-code/444532/3
+      //Camera entry
+      mainTab.addCamera("Front Camera", "Camera1", "http://10.64.11.2:1181/?action=stream")
+         .withProperties(Map.of("showControls",false))
+         .withPosition(7, 0)
+         .withSize(4, 4);
    }
 
    /**
