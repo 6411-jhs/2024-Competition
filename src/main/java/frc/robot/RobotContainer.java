@@ -78,6 +78,6 @@ public class RobotContainer {
    /**When bot is disabled */
    public void onDisable(){
       //Reset the match timer
-      dashboard.resetMatchTimer(currentOperationMode);
+      // dashboard.resetMatchTimer(currentOperationMode);
    }
 }
