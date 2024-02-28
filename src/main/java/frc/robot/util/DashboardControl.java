@@ -59,8 +59,9 @@ public class DashboardControl {
       Shuffleboard.selectTab("Main");
       writableEntries = new Writables();
       readableEntries = new Readables();
-      camera = CameraServer.startAutomaticCapture("Camera1","/Camera1");
-      camera.setResolution(1280, 720);
+      camera = CameraServer.startAutomaticCapture();
+      camera.setResolution(640, 640);
+      camera.setFPS(20);
 
       //Defines writable entries
       writableEntries.maxDRTN = mainTab.addPersistent("MAX Drive Train Speed", Constants.DefaultSystemSpeeds.driveTrain)
@@ -131,7 +132,7 @@ public class DashboardControl {
 
       //* If it doesn't work take a look at this link: https://www.chiefdelphi.com/t/adding-camera-stream-to-shuffleboard-using-code/444532/3
       //Camera entry
-      mainTab.addCamera("Front Camera", "Camera1", "https://roboRIO-6411-frc.local.1181/Camera1")
+      mainTab.addCamera("Front Camera", "Camera1", "http://10.64.11.2:1181/?action=stream")
          .withProperties(Map.of("showControls",false))
          .withPosition(7, 0)
          .withSize(4, 4);
