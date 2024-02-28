@@ -12,14 +12,15 @@ public final class Constants {
 
       public final static int mainCFalcon = 6;
 
-      public final static int leftLCim = 7;
-      public final static int rightLCim = 8;
+      public final static int leftLCim = 8;
+      public final static int rightLCim = 7;
    }
 
    public final class DefaultSystemSpeeds {
       public final static double driveTrain = 1;
       public final static double neos = 1;
       public final static double falcon = 1;
+      public final static double cims = 1;
    }
    
    public final class UserControls {
