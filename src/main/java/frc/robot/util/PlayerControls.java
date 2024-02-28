@@ -59,10 +59,10 @@ public class PlayerControls {
       joystick.button(11).onTrue(createFalconCommand(setAngle90));
       joystick.button(3)
          .onTrue(Commands.runOnce(() -> {
-            cannon.setServo(180);
+            cannon.setServo(160);
          }))
          .onFalse(Commands.runOnce(() -> {
-            cannon.setServo(0);
+            cannon.setServo(100);
          }));
    }
 
